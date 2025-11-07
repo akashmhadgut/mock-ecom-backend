@@ -68,7 +68,9 @@ router.delete("/:id", protect, async (req, res) => {
     await CartItem.findByIdAndDelete(id);
 
     const items = await CartItem.find({ userId }).populate("productId");
-    const total = items.reduce((sum, i) => sum + (i.productId?.price || 0) * i.qty, 0);
+    const total = Math.round(
+  items.reduce((sum, i) => sum + (i.productId?.price || 0) * i.qty, 0)
+);
 
     res.status(200).json({ items, total });
   } catch (err) {

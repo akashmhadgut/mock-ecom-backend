@@ -8,8 +8,10 @@ const productSchema = new mongoose.Schema(
       trim: true,
     },
     price: {
+      
       type: Number,
       required: true,
+      set: (v) => Math.round(v),
     },
     image: {
       type: String,
