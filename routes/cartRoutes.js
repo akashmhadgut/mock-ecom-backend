@@ -30,7 +30,9 @@ router.post("/", protect, async (req, res) => {
     }
 
     const items = await CartItem.find({ userId }).populate("productId");
-    const total = items.reduce((sum, i) => sum + (i.productId?.price || 0) * i.qty, 0);
+    const total = Math.round(
+      items.reduce((sum, i) => sum + (i.productId?.price || 0) * i.qty, 0)
+    );
 
     res.status(200).json({ items, total });
   } catch (err) {
@@ -45,7 +47,9 @@ router.get("/", protect, async (req, res) => {
     const userId = req.user._id;
 
     const items = await CartItem.find({ userId }).populate("productId");
-    const total = items.reduce((sum, i) => sum + (i.productId?.price || 0) * i.qty, 0);
+    const total = Math.round(
+      items.reduce((sum, i) => sum + (i.productId?.price || 0) * i.qty, 0)
+    );
 
     res.status(200).json({ items, total });
   } catch (err) {
@@ -69,8 +73,8 @@ router.delete("/:id", protect, async (req, res) => {
 
     const items = await CartItem.find({ userId }).populate("productId");
     const total = Math.round(
-  items.reduce((sum, i) => sum + (i.productId?.price || 0) * i.qty, 0)
-);
+      items.reduce((sum, i) => sum + (i.productId?.price || 0) * i.qty, 0)
+    );
 
     res.status(200).json({ items, total });
   } catch (err) {
