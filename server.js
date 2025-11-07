@@ -10,7 +10,7 @@ const app = express();
 
 // ✅ CORS setup for deployed frontend + local dev
 const allowedOrigins = [
-  "https://mock-ecom-frontend.onrender.com", // your deployed frontend
+ "https://mock-ecom-frontend.onrender.com", // your deployed frontend
   "http://localhost:3000",                   // local dev
 ];
 

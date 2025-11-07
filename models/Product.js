@@ -8,10 +8,9 @@ const productSchema = new mongoose.Schema(
       trim: true,
     },
     price: {
-      
       type: Number,
       required: true,
-      set: (v) => Math.round(v),
+      set: (v) => Math.round(v), // round before save
     },
     image: {
       type: String,
@@ -19,12 +18,18 @@ const productSchema = new mongoose.Schema(
     },
     fakestoreId: {
       type: Number,
-      default: null, // helps avoid duplicates from Fake Store API
+      default: null,
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
+
+// ✅ Always return rounded price in API response
+productSchema.set("toJSON", {
+  transform: (doc, ret) => {
+    ret.price = Math.round(ret.price);
+    return ret;
+  },
+});
 
 module.exports = mongoose.model("Product", productSchema);
