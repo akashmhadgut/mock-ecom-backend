@@ -19,11 +19,14 @@ router.post("/", async (req, res) => {
       return res.status(400).json({ message: "Cart is empty" });
     }
 
-    // Calculate total
-    const total = cartItems.reduce(
-      (sum, item) => sum + item.productId.price * item.qty,
-      0
-    );
+   // Calculate total
+const total = Math.round(
+  cartItems.reduce(
+    (sum, item) => sum + item.productId.price * item.qty,
+    0
+  )
+);
+
 
     // Mock receipt
     const receipt = {
